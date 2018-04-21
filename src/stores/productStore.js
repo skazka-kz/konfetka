@@ -2,7 +2,7 @@
 import { store } from "react-easy-state";
 import axios from "axios/index";
 
-export default store({
+const productStore = store({
   all: [],
   filteredBuffer: null,
   finishedBuffer: null,
@@ -13,69 +13,69 @@ export default store({
   currentPage: 1,
   totalPages: 0,
   calculate() {
-    this.calculateFilter();
-    this.calculateSort();
-    this.totalPages = Math.ceil(this.finishedBuffer.length / this.perPage);
-    this.setPage(this.currentPage);
+    productStore.calculateFilter();
+    productStore.calculateSort();
+    productStore.totalPages = Math.ceil(productStore.finishedBuffer.length / productStore.perPage);
+    productStore.setPage(productStore.currentPage);
   },
   setPage(pageNum) {
-    const startNum = (pageNum - 1) * this.perPage;
-    this.pagedProducts = this.finishedBuffer.slice(
+    const startNum = (pageNum - 1) * productStore.perPage;
+    productStore.pagedProducts = productStore.finishedBuffer.slice(
       startNum,
-      startNum + this.perPage
+      startNum + productStore.perPage
     );
-    this.currentPage = pageNum;
+    productStore.currentPage = pageNum;
   },
   add(product) {
-    this.all.push(product);
+    productStore.all.push(product);
   },
   changeFilter(newFilter) {
     console.log(`New filter: ${newFilter}`);
-    this.filter = newFilter;
-    this.calculate();
+    productStore.filter = newFilter;
+    productStore.calculate();
   },
   changeSort(newSort) {
-    this.sort = newSort;
-    this.calculate();
+    productStore.sort = newSort;
+    productStore.calculate();
   },
   calculateSort() {
-    switch (this.sort) {
+    switch (productStore.sort) {
       case "alph_asc":
-        this.finishedBuffer = this.filteredBuffer.sort(alpAscCompare);
+        productStore.finishedBuffer = productStore.filteredBuffer.sort(alpAscCompare);
         break;
       case "alph_desc":
-        this.finishedBuffer = this.filteredBuffer.sort(alpDescCompare);
+        productStore.finishedBuffer = productStore.filteredBuffer.sort(alpDescCompare);
         break;
       case "price_asc":
-        this.finishedBuffer = this.filteredBuffer.sort(priceAscCompare);
+        productStore.finishedBuffer = productStore.filteredBuffer.sort(priceAscCompare);
         break;
       case "price_desc":
-        this.finishedBuffer = this.filteredBuffer.sort(priceDescCompare);
+        productStore.finishedBuffer = productStore.filteredBuffer.sort(priceDescCompare);
         break;
       default:
-        this.finishedBuffer = this.filteredBuffer;
+        productStore.finishedBuffer = productStore.filteredBuffer;
     }
   },
   calculateFilter() {
     // If no filter is set, skip, otherwise filter category ids that are selected
-    if (this.filter === null || this.filter === "") {
-      this.filteredBuffer = this.all;
+    if (productStore.filter === null || productStore.filter === "") {
+      productStore.filteredBuffer = productStore.all;
       return;
     }
-    this.filteredBuffer = this.all.filter(
-      item => this.filter === item.category
+    productStore.filteredBuffer = productStore.all.filter(
+      item => productStore.filter === item.category
     );
   },
   async loadProducts() {
     const response = await axios.get("/api/product?accept_cached=1");
-    this.all = this.filteredBuffer = this.finishedBuffer = response.data;
-    this.calculate();
+    productStore.all = productStore.filteredBuffer = productStore.finishedBuffer = response.data;
+    productStore.calculate();
   },
   async deleteProduct(id) {
     const response = await axios.delete(`/api/product/${id}`);
     if (response.status === 200) {
-      this.all = this.all.filter(item => item._id !== id);
-      this.calculate();
+      productStore.all = productStore.all.filter(item => item._id !== id);
+      productStore.calculate();
     } else {
       if (response.data.message) {
         alert("Error deleting a product: " + response.data.message);
@@ -88,7 +88,7 @@ export default store({
     try {
       const response = await axios.post("/api/product", formData);
       if (response.status === 200) {
-        this.loadProducts();
+        productStore.loadProducts();
       } else {
         if (response.data.message) {
           alert("Error adding product: " + response.data.message);
@@ -109,7 +109,7 @@ export default store({
       const response = await axios.post("/api/product/image", formData);
       if (response.status === 200) {
         const newImage = response.data;
-        this.all.forEach(product => {
+        productStore.all.forEach(product => {
           if (product._id === newImage.product) {
             product.images.push(newImage);
           }
@@ -136,7 +136,7 @@ export default store({
         `/api/misc/set_primary_product_image?productId=${productId}&imageId=${imageId}`
       );
       if (response.status === 200) {
-        this.replaceProduct(productId, response.data);
+        productStore.replaceProduct(productId, response.data);
       } else {
         console.log(response);
         if (response.data.message) {
@@ -154,20 +154,20 @@ export default store({
     }
   },
   replaceProduct(id, newProduct) {
-    this.all = this.all.map(product => {
+    productStore.all = productStore.all.map(product => {
       if (id !== product._id) {
         return product;
       } else {
         return newProduct;
       }
     });
-    this.calculate();
+    productStore.calculate();
   },
   async updateProduct(id, formData) {
     try {
       const response = await axios.put(`/api/product/${id}`, formData);
       if (response.status === 200) {
-        this.replaceProduct(id, response.data);
+        productStore.replaceProduct(id, response.data);
       } else {
         console.log(response);
         if (response.data.message) {
@@ -188,7 +188,7 @@ export default store({
     try {
       const response = await axios.delete(`/api/product/image/${imageId}`);
       if (response.status === 200) {
-        this.replaceProduct(productId, response.data);
+        productStore.replaceProduct(productId, response.data);
       } else {
         console.log(response);
         if (response.data.message) {
@@ -224,3 +224,5 @@ const priceAscCompare = (itemA, itemB) => {
 const priceDescCompare = (itemA, itemB) => {
   return Number.parseFloat(itemA.price) < Number.parseFloat(itemB.price);
 };
+
+export default productStore;

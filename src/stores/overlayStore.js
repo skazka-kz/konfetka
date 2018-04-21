@@ -1,8 +1,10 @@
 import { store } from "react-easy-state";
 
-export default store({
+const ovStore = store({
   isActive: false,
   toggle() {
-    this.isActive = !this.isActive;
+    ovStore.isActive = !ovStore.isActive;
   }
 });
+
+export default ovStore;

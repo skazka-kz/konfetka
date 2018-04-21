@@ -2,7 +2,7 @@
 import { store } from "react-easy-state";
 import authHelper from "../helpers/authHelper";
 
-export default store({
+const authStore = store({
   authenticated: false,
   user: null,
   error: null,
@@ -13,14 +13,14 @@ export default store({
     try {
       const result = await authHelper.authenticate(username, password);
       if (result) {
-        this.authenticated = true;
-        this.user = result;
+        authStore.authenticated = true;
+        authStore.user = result;
       }
     } catch (e) {
       if (e.response.status === 401) {
-        this.loginError = "Wrong username or password";
+        authStore.loginError = "Wrong username or password";
       } else {
-        this.loginError = "Error when logging in";
+        authStore.loginError = "Error when logging in";
       }
     }
   },
@@ -28,22 +28,22 @@ export default store({
     try {
       const result = await authHelper.logout();
       if (result === true) {
-        this.authenticated = false;
-        this.user = null;
+        authStore.authenticated = false;
+        authStore.user = null;
       }
     } catch (e) {
-      this.logoutError = true;
+      authStore.logoutError = true;
     }
   },
   async getCurrentUser() {
     try {
       const result = await authHelper.getCurrentUser();
       if (result) {
-        this.authenticated = true;
-        this.user = result;
+        authStore.authenticated = true;
+        authStore.user = result;
       } else {
-        this.authenticated = false;
-        this.user = null;
+        authStore.authenticated = false;
+        authStore.user = null;
       }
     } catch (e) {}
   },
@@ -52,10 +52,10 @@ export default store({
       const result = await authHelper.registerNewUser(userData);
       if (result) {
         // Also login using the API to to set the token
-        await this.authenticate(userData.email, userData.password);
+        await authStore.authenticate(userData.email, userData.password);
       }
     } catch (e) {
-      this.registrationError = e;
+      authStore.registrationError = e;
     }
   },
   async handleLogin(e) {
@@ -63,7 +63,7 @@ export default store({
     const email = e.target.elements.login_email.value;
     const pass = e.target.elements.login_password.value;
 
-    await this.authenticate(email, pass);
+    await authStore.authenticate(email, pass);
   },
   async handleRegistration(e) {
     e.preventDefault();
@@ -75,10 +75,10 @@ export default store({
     const nickName = targetValues.register_nickname.value;
 
     if (pass1 !== pass2) {
-      this.registrationError = "Passwords have to match";
+      authStore.registrationError = "Passwords have to match";
       return null;
     }
-    await this.registerNewUser({
+    await authStore.registerNewUser({
       email,
       fullName,
       password: pass1,
@@ -86,3 +86,5 @@ export default store({
     });
   }
 });
+
+export default authStore;

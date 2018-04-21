@@ -31,7 +31,7 @@ const FinderLink = styled(Link)`
   cursor: pointer;
   display: flex;
   justify-content: center;
-  padding: 0.5rem;
+  padding: 0.7rem 0;
   background-color: #fc5f21;
   color: white;
   font-size: 1.5rem;
