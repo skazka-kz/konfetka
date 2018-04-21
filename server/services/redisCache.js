@@ -11,7 +11,7 @@ client.get = util.promisify(client.get);
 
 const exec = mongoose.Query.prototype.exec;
 
-mongoose.Query.prototype.cache = function(options = {}) {
+mongoose.Query.prototype.cache = function() {
   this.useCache = true;
   return this;
 };
@@ -26,6 +26,7 @@ mongoose.Query.prototype.exec = async function() {
       this.mongooseCollection.name
     }`
   );
+  console.log(this.getQuery());
 
   // Using object assign so as not to mutate any sensitive data before it's passed back to mongoose
   // This key is what redis will use to record the "uniqueness" of this function

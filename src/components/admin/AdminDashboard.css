@@ -1,0 +1,8 @@
+
+.full-min-height {
+    min-height: auto;
+}
+
+@media (min-width: 768px){
+    .full-min-height { min-height: calc(100vh - 64px) !important; }
+}

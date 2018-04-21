@@ -1,0 +1,202 @@
+{
+  "cities": [
+    {
+      "id": 1,
+      "name": "Кокшетау"
+    }
+  ],
+  "shops": [
+    {
+      "id": 1,
+      "cityID": 1,
+      "title": "Конфетка на Ташенова",
+      "addressOne": "ул. Ташенова, 53",
+      "addressTwo": "Вместе с аптекой Пульс",
+      "openingTimes": "09:00 - 21:00",
+      "coords": {
+        "latitude": "53.286306",
+        "longitude": "69.401275"
+      },
+      "images": [
+        {
+          "id": 1,
+          "url": "tashenova1.jpg",
+          "href": "Конфетка на Ташенова, Кокшетау"
+        },
+        {
+          "id": 2,
+          "url": "tashenova2.jpg",
+          "href": "Конфетка на Ташенова, Кокшетау"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "cityID": 1,
+      "title": "Конфетка на Калинина",
+      "addressOne": "ул. Калинина, 5А",
+      "addressTwo": "Рядом с Керуен",
+      "openingTimes": "09:00 - 21:00",
+      "coords": {
+        "latitude": "53.292184",
+        "longitude": "69.381710"
+      },
+      "images": [
+        {
+          "id": 1,
+          "url": "kalinina1.jpg",
+          "href": "Конфетка на Калинина, Кокшетау"
+        },
+        {
+          "id": 2,
+          "url": "kalinina2.jpg",
+          "href": "Конфетка на Калинина, Кокшетау"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "cityID": 1,
+      "title": "Конфетка на Центральном Рынке",
+      "addressOne": "Центральный ранок Орталык",
+      "addressTwo": "2-ой этаж, бутик 389",
+      "openingTimes": "09:00 - 21:00",
+      "coords": {
+        "latitude": "53.290313",
+        "longitude": "69.381491"
+      },
+      "images": [
+        {
+          "id": 1,
+          "url": "rynok1.jpg",
+          "href": "Конфетка на Центральном Рынке, Кокшетау"
+        },
+        {
+          "id": 2,
+          "url": "rynok2.jpg",
+          "href": "Конфетка на Центральном Рынке, Кокшетау"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "cityID": 1,
+      "title": "Конфетка на Ауельбекова",
+      "addressOne": "ул Ауельбекова, 115",
+      "addressTwo": "Бывшая аптека, рядом с 'Каспи Банк'",
+      "openingTimes": "09:00 - 21:00",
+      "coords": {
+        "latitude": "53.283565",
+        "longitude": "69.384826"
+      },
+      "images": [
+        {
+          "id": 1,
+          "url": "gorkogo1.jpg",
+          "href": "Конфетка на Горького, Кокшетау"
+        },
+        {
+          "id": 2,
+          "url": "gorkogo2.jpg",
+          "href": "Конфетка на Горького, Кокшетау"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "cityID": 1,
+      "title": "Конфетка в Юбилейном",
+      "addressOne": "мк-н Юбилейный, 39",
+      "addressTwo": "",
+      "openingTimes": "09:00 - 21:00",
+      "coords": {
+        "latitude": "53.269936",
+        "longitude": "69.423791"
+      },
+      "images": [
+        {
+          "id": 1,
+          "url": "yubileinyi1.jpg",
+          "href": "Конфетка в Юбилейном, Кокшетау"
+        },
+        {
+          "id": 2,
+          "url": "yubileinyi2.jpg",
+          "href": "Конфетка в Юбилейном, Кокшетау"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "cityID": 1,
+      "title": "Конфетка на Проспекте",
+      "addressOne": "проспект Абылай-Хана, 28",
+      "addressTwo": "",
+      "openingTimes": "09:00 - 21:00",
+      "coords": {
+        "latitude": "53.303495",
+        "longitude": "69.391510"
+      },
+      "images": [
+        {
+          "id": 1,
+          "url": "prospekt1.jpg",
+          "href": "Конфетка на Проспекте, Кокшетау"
+        },
+        {
+          "id": 2,
+          "url": "prospekt2.jpg",
+          "href": "Конфетка на Проспекте, Кокшетау"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "cityID": 1,
+      "title": "Конфетка в Васильковке",
+      "addressOne": "мк-н Васильковский, 33",
+      "addressTwo": "",
+      "openingTimes": "09:00 - 21:00",
+      "coords": {
+        "latitude": "53.311903",
+        "longitude": "69.390042"
+      },
+      "images": [
+        {
+          "id": 1,
+          "url": "vasilkovka1.jpg",
+          "href": "Конфетка в Васильковке, Кокшетау"
+        },
+        {
+          "id": 2,
+          "url": "vasilkovka2.jpg",
+          "href": "Конфетка в Васильковке, Кокшетау"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "cityID": 1,
+      "title": "Конфетка на Жибек-Жолы",
+      "addressOne": "Рынок Жибек-Жолы",
+      "addressTwo": "1-ый этаж, бутик 30",
+      "openingTimes": "09:00 - 21:00",
+      "coords": {
+        "latitude": "53.291811",
+        "longitude": "69.402439"
+      },
+      "images": [
+        {
+          "id": 1,
+          "url": "zhibekzholy1.jpg",
+          "href": "Конфетка на Жибек-Жолы, Кокшетау"
+        },
+        {
+          "id": 2,
+          "url": "zhibekzholy2.jpg",
+          "href": "Конфетка на Жибек-Жолы, Кокшетау"
+        }
+      ]
+    }
+  ]
+}

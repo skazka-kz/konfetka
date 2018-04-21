@@ -52,11 +52,6 @@ exports.add_a_product = async (req, res) => {
   }
 };
 exports.get_all_products = async (req, res) => {
-  // If asks for cached - give cached
-  if (req.query["accept_cached"]) {
-    const file = await readFilePromise("./.cached.json", "utf8");
-    return res.send(JSON.parse(file).products);
-  }
   const allProducts = await Product.find({})
     .populate("images")
     .populate("frontImage")

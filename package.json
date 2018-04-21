@@ -20,6 +20,7 @@
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
     "react-easy-state": "^5.0.1",
+    "react-paginate": "^5.2.2",
     "react-responsive-carousel": "^3.1.36",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.4",
@@ -32,7 +33,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "dev":"concurrently \"nodemon server/index.js\" \"yarn run start\""
   },
   "devDependencies": {
     "concurrently": "^3.5.1",
@@ -43,5 +45,16 @@
     "puppeteer": "^1.3.0",
     "supertest": "^3.0.0",
     "supertest-session": "^3.2.0"
+  },
+  "proxy": {
+    "/api": {
+      "target": "http://localhost:5000"
+    },
+    "/auth": {
+      "target": "http://localhost:5000"
+    },
+    "/uploads": {
+      "target": "http://localhost:5000"
+    }
   }
 }
