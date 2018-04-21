@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import ProductItem from "./ProductItem";
@@ -13,7 +13,7 @@ import {
   CategoryItem
 } from "../../styled/frontPageCollection";
 
-class PopularProductsSection extends Component {
+class PopularProductsSection extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -29,7 +29,12 @@ class PopularProductsSection extends Component {
   }
 
   async componentDidMount() {
-    const response = await axios.get("/api/products");
+    let response;
+    if (this.props.onlyPopular){
+      response = await axios.get("/api/misc/popular_products");
+    } else {
+      response = await axios.get("/api/misc/all_products");
+    }
     this.setState({
       allProducts: response.data,
       filteredProducts: response.data,

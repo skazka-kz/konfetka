@@ -27,6 +27,10 @@ const ProductSchema = new Schema({
     type: Date,
     default: Date.now
   },
+  isPopular: {
+    type: Boolean,
+    default: false
+  },
   images: [
     {
       type: Schema.Types.ObjectId,

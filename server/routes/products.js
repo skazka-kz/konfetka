@@ -12,8 +12,11 @@ const {
   add_category,
   delete_category,
   edit_category,
-  get_all_categories
+  get_all_categories,
+  get_all_products_cache,
+  get_popular_products
 } = require("../controllers/product");
+const clearProductCache = require("../middlewares/cleanProductCache");
 const requireLogin = require("../middlewares/requireLogin");
 
 const productImageStorage = multer.diskStorage({
@@ -70,11 +73,16 @@ module.exports = app => {
   app.post(
     "/api/products",
     requireLogin,
+    clearProductCache,
     upload.array("files", 10),
     add_a_product
   );
-  app.put("/api/products/:id", requireLogin, update_product);
-  app.delete("/api/products/:id", requireLogin, delete_product);
+  app.put("/api/products/:id", requireLogin, clearProductCache, update_product);
+  app.delete("/api/products/:id", requireLogin, clearProductCache, delete_product);
+
+  // Front end specific routes that cache in redis
+  app.get("/api/misc/popular_products", get_popular_products);
+  app.get("/api/misc/all_products", get_all_products_cache);
 
   // Product Image CRUD
   app.post(
@@ -83,16 +91,17 @@ module.exports = app => {
     upload.single("file"),
     add_image_to_product
   );
-  app.delete("/api/products/image/:id", requireLogin, delete_product_image);
+  app.delete("/api/products/image/:id", requireLogin, clearProductCache, delete_product_image);
   app.get(
     "/api/misc/set_primary_product_image",
     requireLogin,
+    clearProductCache,
     set_products_default_image
   );
 
   // Product categories CRUD
   app.get("/api/categories", get_all_categories);
-  app.post("/api/categories", requireLogin, add_category);
-  app.put("/api/categories/:id", requireLogin, edit_category);
-  app.delete("/api/categories/:id", requireLogin, delete_category);
+  app.post("/api/categories", requireLogin, clearProductCache, add_category);
+  app.put("/api/categories/:id", requireLogin, clearProductCache, edit_category);
+  app.delete("/api/categories/:id", requireLogin, clearProductCache, delete_category);
 };

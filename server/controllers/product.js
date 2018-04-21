@@ -54,8 +54,21 @@ exports.add_a_product = async (req, res) => {
 exports.get_all_products = async (req, res) => {
   const allProducts = await Product.find({})
     .populate("images")
+    .populate("frontImage");
+  res.send(allProducts);
+};
+exports.get_popular_products = async (req, res) => {
+  const popular = await Product.find({ isPopular: true })
+    .populate("images")
     .populate("frontImage")
-    .cache();
+    .cache({ key: "popular_products" });
+  res.send(popular);
+};
+exports.get_all_products_cache = async (req, res) => {
+  const allProducts = await Product.find({})
+    .populate("images")
+    .populate("frontImage")
+    .cache({ key: "all_products" });
   res.send(allProducts);
 };
 exports.delete_product = async (req, res) => {
@@ -185,7 +198,9 @@ exports.delete_product_image = async (req, res) => {
 };
 exports.get_all_categories = async (req, res) => {
   try {
-    const categories = await ProductCategory.find().cache();
+    const categories = await ProductCategory.find().cache({
+      key: "categories"
+    });
     res.send(categories);
   } catch (e) {
     console.error(e);
