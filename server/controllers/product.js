@@ -59,7 +59,8 @@ exports.get_all_products = async (req, res) => {
   }
   const allProducts = await Product.find({})
     .populate("images")
-    .populate("frontImage");
+    .populate("frontImage")
+    .cache();
   res.send(allProducts);
 };
 exports.delete_product = async (req, res) => {
@@ -189,7 +190,7 @@ exports.delete_product_image = async (req, res) => {
 };
 exports.get_all_categories = async (req, res) => {
   try {
-    const categories = await ProductCategory.find();
+    const categories = await ProductCategory.find().cache();
     res.send(categories);
   } catch (e) {
     console.error(e);
