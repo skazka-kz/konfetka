@@ -31,6 +31,7 @@ require("./models/Shop");
 require("./models/User");
 
 require("./services/passport");
+require("./services/redisCache");
 
 // Using Helmet to setup the security for the Express server
 app.use(helmet());
