@@ -12,3 +12,12 @@ const keys = require("../config/keys");
 // Setting up Mongo and Mongoose
 mongoose.Promise = Promise;
 
+
+// Connect to MongoDB with a small async iife
+(async () => {
+  try {
+      await mongoose.connect(keys.mongoUri);
+  } catch (e) {
+      console.error(`Error connecting to MongoDB: ${e.code}, ${e.message}`);
+  }
+})();
