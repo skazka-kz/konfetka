@@ -6,6 +6,7 @@ const passport = require("passport");
 const bodyParser = require("body-parser");
 const cookieSession = require("cookie-session");
 const app = express();
+const errorHandler = require("./middlewares/errorHandler");
 
 // Secret keys for mongo, redis and cookie session encryption
 const keys = require("../config/keys");
@@ -13,13 +14,12 @@ const keys = require("../config/keys");
 // Setting up Mongo and Mongoose
 mongoose.Promise = Promise;
 
-
 // Connect to MongoDB with a small async iife
 (async () => {
   try {
-      await mongoose.connect(keys.mongoUri);
+    await mongoose.connect(keys.mongoUri);
   } catch (e) {
-      console.error(`Error connecting to MongoDB: ${e.code}, ${e.message}`);
+    console.error(`Error connecting to MongoDB: ${e.code}, ${e.message}`);
   }
 })();
 
@@ -52,3 +52,21 @@ app.use(
 // Setting up authentication with Passport using a local strategy
 app.use(passport.initialize());
 app.use(passport.session());
+
+// Setup routes
+require("./routes/auth")(app);
+require("./routes/products")(app);
+
+// Setup static routes
+app.use("/uploads", express.static("uploads"));
+
+if (["production", "ci"].includes(process.env.NODE_ENV) || process.env.CI) {
+  app.use(express.static("../build"));
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "..", "build", "index.html"));
+  });
+}
+
+app.use(errorHandler);
+
+module.exports = app;

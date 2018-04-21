@@ -232,19 +232,3 @@ exports.delete_category = async (req, res) => {
       .send({ message: "Error trying to remove a product category" });
   }
 };
-exports.create_cache = async (req, res) => {
-  try {
-    const allProducts = await Product.find({})
-      .populate("images")
-      .populate("frontImage");
-    const cachedObj = JSON.stringify({
-      created: new Date(),
-      products: allProducts
-    });
-    fs.writeFile("./.cached.json", cachedObj, "utf8", () => {
-      return res.send({ message: "success" });
-    });
-  } catch (e) {
-    res.status(500).send({ message: "Error trying to create cache" });
-  }
-};
