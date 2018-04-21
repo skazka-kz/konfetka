@@ -11,6 +11,11 @@ client.get = util.promisify(client.get);
 
 const exec = mongoose.Query.prototype.exec;
 
+// Custom file logger for easy debugging
+const fileLogger = new winston.Logger({
+  transports: [new winston.transports.File({ filename: "utility.log" })]
+});
+
 mongoose.Query.prototype.cache = function() {
   this.useCache = true;
   return this;
@@ -20,35 +25,29 @@ mongoose.Query.prototype.exec = async function() {
   if (!this.useCache) {
     return exec.apply(this, arguments);
   }
-  winston.log(
-    "info",
-    `About to run a query which will be cached from ${
-      this.mongooseCollection.name
-    }`
-  );
-  console.log(this.getQuery());
+  console.log(this.mongooseOptions());
+  // fileLogger.log("info", JSON.stringify(util.inspect(this)));
 
   // Using object assign so as not to mutate any sensitive data before it's passed back to mongoose
   // This key is what redis will use to record the "uniqueness" of this function
   const key = JSON.stringify(
     Object.assign({}, this.getQuery(), {
-      collection: this.mongooseCollection.name
+      collection: this.mongooseCollection.name,
+      options: this.mongooseOptions()
     })
   );
 
+  console.log(`Looking for a unique key of ${key}`);
+
   const cacheValue = await client.get(key);
 
-  // if already cached, get the redis value
-  if (cacheValue) {
-    const doc = JSON.parse(cacheValue);
-    // Handle the case when cached value is actually an array
-    return Array.isArray(doc)
-      ? doc.map(d => new this.model(d))
-      : new this.model(doc);
+  if (!cacheValue) {
+    // Not cached, return the result after caching it
+    const result = await exec.apply(this, arguments);
+    client.set(key, JSON.stringify(result), "EX", 3600);
+    return result;
+  } else {
+    // if already cached, get the redis value
+    return JSON.parse(cacheValue);
   }
-
-  // Not cached, return the result after caching it
-  const result = await exec.apply(this, arguments);
-  client.set(key, JSON.stringify(result), "EX", 3600);
-  return result;
 };

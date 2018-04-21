@@ -58,7 +58,7 @@ require("./routes/auth")(app);
 require("./routes/products")(app);
 
 // Setup static routes
-app.use("/uploads", express.static("uploads"));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 if (["production", "ci"].includes(process.env.NODE_ENV) || process.env.CI) {
   app.use(express.static("../build"));
