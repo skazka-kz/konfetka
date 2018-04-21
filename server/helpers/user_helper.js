@@ -1,5 +1,4 @@
 const User = require("../models/User");
-const bcrypt = require("bcryptjs");
 
 module.exports = {
   validateEmail(email) {
@@ -30,12 +29,10 @@ module.exports = {
           reject(new Error("User with this email already exists"));
         }
 
-        // All seems good, proceed to hash the password and save the user
-        const salt = await bcrypt.genSalt(10);
-        const hashedPass = await bcrypt.hash(userData.password, salt);
+        // All seems good, proceed to save the user
         const newUser = await new User({
           authType: userData.authType,
-          password: hashedPass,
+          password: userData.password,
           email: userData.email,
           fullName: userData.fullName,
           nickName: userData.nickName,
@@ -47,7 +44,7 @@ module.exports = {
 
         resolve(newUser);
       } catch (e) {
-        reject(new Error(e));
+        reject(e);
       }
     });
   }
