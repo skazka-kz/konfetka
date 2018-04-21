@@ -52,7 +52,7 @@ mongoose.Query.prototype.exec = async function() {
   if (!cacheValue) {
     // Not cached, return the result after caching it
     const result = await exec.apply(this, arguments);
-    client.set(key, JSON.stringify(result), "EX", 15);
+    client.set(key, JSON.stringify(result), "EX", 3600);
     winston.log("info", "No value was cached, is cached now");
     return result;
   } else {
@@ -65,10 +65,10 @@ mongoose.Query.prototype.exec = async function() {
 
 module.exports = {
   async clearProductCache(){
-    await client.del("popular_products");
-    await client.del("all_products");
+    await client.del(JSON.stringify("popular_products"));
+    await client.del(JSON.stringify("all_products"));
   },
   async clearCategoryCache(){
-    await client.del("categories");
+    await client.del(JSON.stringify("categories"));
   }
 };
