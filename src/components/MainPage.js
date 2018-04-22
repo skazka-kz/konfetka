@@ -14,7 +14,7 @@ const MainPage = () => (
       <HeaderLink href="#">Контакты</HeaderLink>
     </HeaderLinksContainer>
     <FrontErrorBoundary>
-      {/*<Carousel />*/}
+      <Carousel />
       <PopularProducts
         perPage={4}
         onlyPopular

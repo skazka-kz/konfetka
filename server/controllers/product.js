@@ -54,7 +54,8 @@ exports.add_a_product = async (req, res) => {
 exports.get_all_products = async (req, res) => {
   const allProducts = await Product.find({})
     .populate("images")
-    .populate("frontImage");
+    .populate("frontImage")
+    .cache({ key: "all_products_raw" });
   res.send(allProducts);
 };
 exports.get_popular_products = async (req, res) => {

@@ -22,9 +22,9 @@ const requireLogin = require("../middlewares/requireLogin");
 const productImageStorage = multer.diskStorage({
   destination(req, file, cb) {
     if (process.env.NODE_ENV === "test") {
-      cb(null, "./uploads/test");
+      cb(null, "./server/uploads/test");
     } else {
-      cb(null, "./uploads");
+      cb(null, "./server/uploads");
     }
   },
   filename(req, file, cb) {
@@ -88,6 +88,7 @@ module.exports = app => {
   app.post(
     "/api/products/image",
     requireLogin,
+    clearProductCache,
     upload.single("file"),
     add_image_to_product
   );

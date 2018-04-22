@@ -67,12 +67,12 @@ const productStore = store({
     );
   },
   async loadProducts() {
-    const response = await axios.get("/api/product?accept_cached=1");
+    const response = await axios.get("/api/products");
     productStore.all = productStore.filteredBuffer = productStore.finishedBuffer = response.data;
     productStore.calculate();
   },
   async deleteProduct(id) {
-    const response = await axios.delete(`/api/product/${id}`);
+    const response = await axios.delete(`/api/products/${id}`);
     if (response.status === 200) {
       productStore.all = productStore.all.filter(item => item._id !== id);
       productStore.calculate();
@@ -86,7 +86,7 @@ const productStore = store({
   },
   async addProduct(formData) {
     try {
-      const response = await axios.post("/api/product", formData);
+      const response = await axios.post("/api/products", formData);
       if (response.status === 200) {
         productStore.loadProducts();
       } else {
@@ -106,7 +106,7 @@ const productStore = store({
   },
   async addProductImage(formData) {
     try {
-      const response = await axios.post("/api/product/image", formData);
+      const response = await axios.post("/api/products/image", formData);
       if (response.status === 200) {
         const newImage = response.data;
         productStore.all.forEach(product => {
@@ -165,7 +165,7 @@ const productStore = store({
   },
   async updateProduct(id, formData) {
     try {
-      const response = await axios.put(`/api/product/${id}`, formData);
+      const response = await axios.put(`/api/products/${id}`, formData);
       if (response.status === 200) {
         productStore.replaceProduct(id, response.data);
       } else {
@@ -186,7 +186,7 @@ const productStore = store({
   },
   async deleteProductImage(productId, imageId) {
     try {
-      const response = await axios.delete(`/api/product/image/${imageId}`);
+      const response = await axios.delete(`/api/products/image/${imageId}`);
       if (response.status === 200) {
         productStore.replaceProduct(productId, response.data);
       } else {

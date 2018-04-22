@@ -16,13 +16,13 @@ const catStore = store({
     });
   },
   async loadAll() {
-    const response = await axios.get("/api/category");
+    const response = await axios.get("/api/categories");
     if (response.status === 200) {
       catStore.all = response.data;
     }
   },
   async add(name) {
-    const response = await axios.post("/api/category", { title: name });
+    const response = await axios.post("/api/categories", { title: name });
     if (response.status === 200) {
       catStore.all.push(response.data);
     } else {
@@ -31,7 +31,7 @@ const catStore = store({
     }
   },
   async delete(id) {
-    const response = await axios.delete(`/api/category/${id}`);
+    const response = await axios.delete(`/api/categories/${id}`);
     if (response.status === 200) {
       catStore.removeFromList(id);
     } else {
@@ -40,7 +40,7 @@ const catStore = store({
     }
   },
   async edit(id, newTitle) {
-    const response = await axios.put(`/api/category/${id}`, {
+    const response = await axios.put(`/api/categories/${id}`, {
       title: newTitle
     });
     if (response.status === 200) {

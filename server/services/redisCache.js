@@ -71,6 +71,7 @@ module.exports = {
   async clearProductCache(){
     await client.del("popular_products");
     await client.del("all_products");
+    await client.del("all_products_raw");
   },
   async clearCategoryCache(){
     await client.del("categories");
