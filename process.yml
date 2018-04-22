@@ -1,6 +1,3 @@
 apps:
   - script: 'server/index.js'
     name: 'konfetka'
-    exec_mode: 'cluster'
-    watch: true
-    instances: '2'

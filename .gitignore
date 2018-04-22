@@ -23,6 +23,7 @@ yarn-error.log*
 
 .idea
 .directory
+.env
 
 # files with sensitive keys for local dev and tests
 config/dev.js

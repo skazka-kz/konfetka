@@ -15,7 +15,8 @@ COPY . .
 # Build the front-end
 RUN yarn run build
 
+COPY .env .
 RUN ls -a
 EXPOSE 5000
 
-CMD [ "pm2-runtime", "process.yml" ]
+CMD [ "pm2-docker", "process.yml" ]

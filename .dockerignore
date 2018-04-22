@@ -17,7 +17,6 @@ yarn-error.log*
 README.md
 .gitignore
 
-
 # Runtime data
 pids
 *.pid
