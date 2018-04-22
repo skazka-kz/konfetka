@@ -10,11 +10,13 @@ export const Header = styled.header`
   background-color: ${orange};
   display: flex;
   justify-content: center;
+  align-items: center;
   border-bottom: 6px solid ${brown};
 `;
 
 export const HeaderLogo = styled.img`
   padding: 1rem;
+  max-width: 80%;
 `;
 
 export const HeaderLinksContainer = styled.div`
@@ -64,7 +66,7 @@ export const ProductContainer = styled.div`
 export const SlimContentSection = styled.section`
   max-width: 900px;
   width: 100%;
-  padding: 0 2rem;
+  padding: 0;
   display: flex;
   flex-direction: column;
 `;
@@ -79,6 +81,7 @@ export const OrangeHeader = styled.h2`
 export const GreyText = styled.p`
   color: ${darkGrey};
   font-size: 1.4rem;
+  padding: 0 1.5rem;
 `;
 
 export const Divider = styled.hr`
@@ -97,6 +100,7 @@ export const PageContainer = styled.ul`
   margin-top: 2rem;
   margin-bottom: 3rem;
   max-width: 1300px;
+  padding: 0;
 `;
 
 export const PagePea = styled.li`
@@ -130,6 +134,9 @@ export const CategoryContainer = styled.ul`
   justify-content: space-around;
   width: 90%;
   max-width: 1300px;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
 `;
 
 export const CategoryItem = styled.li`

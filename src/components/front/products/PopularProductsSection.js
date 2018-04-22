@@ -30,7 +30,7 @@ class PopularProductsSection extends React.Component {
 
   async componentDidMount() {
     let response;
-    if (this.props.onlyPopular){
+    if (this.props.onlyPopular) {
       response = await axios.get("/api/misc/popular_products");
     } else {
       response = await axios.get("/api/misc/all_products");
@@ -115,20 +115,46 @@ class PopularProductsSection extends React.Component {
     }));
   }
 
+  renderPagination() {
+    if (this.state.allPages <= 1) {
+      return <PageContainer/>;
+    } else {
+      return <PageContainer>
+        <LargePea
+          isActive={this.state.currentPage !== 0}
+          onClick={() => {
+            this.handlePageSelected(this.state.currentPage - 1);
+          }}
+        >
+          &lt;
+        </LargePea>
+        {[...Array(this.state.allPages)].map((_, num) => (
+          <PagePea
+            key={num}
+            selected={this.state.currentPage === num}
+            onClick={() => {
+              this.handlePageSelected(num);
+            }}
+          >
+            ◉
+          </PagePea>
+        ))}
+        <LargePea
+          isActive={this.state.currentPage !== this.state.allPages - 1}
+          onClick={() => {
+            this.handlePageSelected(this.state.currentPage + 1);
+          }}
+        >
+          &gt;
+        </LargePea>
+      </PageContainer>;
+
+    }
+  }
+
   render() {
     const products = this.state.currentProducts.map(item => (
       <ProductItem key={item._id} {...item} />
-    ));
-    const pages = [...Array(this.state.allPages)].map((_, num) => (
-      <PagePea
-        key={num}
-        selected={this.state.currentPage === num}
-        onClick={() => {
-          this.handlePageSelected(num);
-        }}
-      >
-        ◉
-      </PagePea>
     ));
 
     let categories = null;
@@ -151,25 +177,7 @@ class PopularProductsSection extends React.Component {
         <OrangeHeader>{this.props.sectionTitle}</OrangeHeader>
         <CategoryContainer>{categories}</CategoryContainer>
         <ProductContainer>{products}</ProductContainer>
-        <PageContainer>
-          <LargePea
-            isActive={this.state.currentPage !== 0}
-            onClick={() => {
-              this.handlePageSelected(this.state.currentPage - 1);
-            }}
-          >
-            &lt;
-          </LargePea>
-          {pages}
-          <LargePea
-            isActive={this.state.currentPage !== this.state.allPages - 1}
-            onClick={() => {
-              this.handlePageSelected(this.state.currentPage + 1);
-            }}
-          >
-            &gt;
-          </LargePea>
-        </PageContainer>
+        {this.renderPagination()}
       </SectionWrapper>
     );
   }

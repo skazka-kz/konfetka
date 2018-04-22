@@ -36,25 +36,37 @@ export const TransparencyLayer = styled.div`
 
 export const ShopListWrapper = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex-wrap: wrap;
   justify-content: space-between;
   max-width: 900px;
   padding: 0 2rem;
+  margin-bottom: 2rem;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+  }
 `;
 
 export const ShopListDiv = styled.div`
-  width: 37%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  @media (min-width: 768px) {
+    width: 37%;
+  }
 `;
 export const Gallery = styled.div`
   display: flex;
-  width: 60%;
+  width: 100%;
   justify-content: space-between;
   flex-wrap: wrap;
   margin-top: 2rem;
+  @media (min-width: 768px) {
+    width: 60%;
+  }
 `;
 export const GalleryImage = styled.img`
   max-width: 250px;
@@ -145,8 +157,8 @@ export const GreyFakeText = styled(FakeText)`
 
 export const FakeImage = styled.div`
   opacity: 0.5;
-  width: 240px;
-  height: 170px;
+  width: 47%;
+  height: 100px;
   margin-bottom: 1rem;
   animation: ${orangePulse} 5s linear infinite;
   display: flex;
@@ -154,6 +166,17 @@ export const FakeImage = styled.div`
   align-items: center;
   font-size: 1.4rem;
   font-weight: 300;
+  text-align: center;
+
+  @media (min-width: 768px) {
+    height: 150px;
+  }
+  
+  @media (min-width: 1024px) {
+    width: 240px;
+    height: 170px;
+  }
+  
 `;
 
 export const PlaceholderImage = () => <FakeImage>Фото скоро будет</FakeImage>;
