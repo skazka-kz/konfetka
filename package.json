@@ -30,7 +30,7 @@
     "winston": "^2.4.2"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "node server/",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",

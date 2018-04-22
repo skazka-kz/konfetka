@@ -61,9 +61,9 @@ require("./routes/products")(app);
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 if (["production", "ci"].includes(process.env.NODE_ENV) || process.env.CI) {
-  app.use(express.static("../build"));
+  app.use(express.static("build"));
   app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "..", "build", "index.html"));
+    res.sendFile(path.resolve(__dirname, "../", "build", "index.html"));
   });
 }
 

@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const winston = require("winston");
 const redis = require("redis");
 const util = require("util");
 const redisUri = require("../../config/keys").redisUri;
@@ -48,21 +47,15 @@ mongoose.Query.prototype.exec = async function() {
       })
     );
   }
-
-  winston.log("info", `Processing a cache-able request with a key ${key}`);
-
   const cacheValue = await client.get(key);
 
   if (!cacheValue) {
     // Not cached, return the result after caching it
     const result = await exec.apply(this, arguments);
     client.set(key, JSON.stringify(result), "EX", 3600);
-    winston.log("info", "No value was cached, is cached now");
     return result;
   } else {
     // if already cached, get the redis value
-    winston.log("info", "Cached value was found, here's first 100 chars: ");
-    winston.log("info", cacheValue.substr(0, 100));
     return JSON.parse(cacheValue);
   }
 };
