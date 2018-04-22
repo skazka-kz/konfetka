@@ -9,8 +9,8 @@ services:
   konfetka:
     build: .
     restart: always
-    ports:
-      - 5001:5000
+    expose:
+      - 5000
     depends_on:
       - mongo
       - redis
@@ -25,10 +25,10 @@ services:
       - /usr/src/app/server/uploads
     labels:
       traefik.backend: "konfetka-prod"
+      traefik.protocol: "http"
       traefik.docker.network: "web"
       traefik.frontend.rule: "Host:dev.konfetka-shop.kz"
       traefik.enable: "true"
-      traefik.protocol: "http"
       traefik.port: "5000"
 networks:
   web:
