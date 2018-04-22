@@ -20,7 +20,11 @@ const exec = mongoose.Query.prototype.exec;
  */
 mongoose.Query.prototype.cache = function(options = {}) {
   this.useCache = true;
-  this.redisKey = JSON.stringify(options.key || "");
+  if (typeof options.key === "string"){
+    this.redisKey = options.key;
+  } else {
+    this.redisKey = JSON.stringify(options.key || "");
+  }
 
   return this;
 };
@@ -65,10 +69,10 @@ mongoose.Query.prototype.exec = async function() {
 
 module.exports = {
   async clearProductCache(){
-    await client.del(JSON.stringify("popular_products"));
-    await client.del(JSON.stringify("all_products"));
+    await client.del("popular_products");
+    await client.del("all_products");
   },
   async clearCategoryCache(){
-    await client.del(JSON.stringify("categories"));
+    await client.del("categories");
   }
 };
