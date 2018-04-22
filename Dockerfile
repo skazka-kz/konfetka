@@ -15,7 +15,6 @@ COPY . .
 # Build the front-end
 RUN yarn run build
 
-COPY .env .
 RUN ls -a
 EXPOSE 5000
 

@@ -42,7 +42,7 @@ app.use(bodyParser.json());
 // Setting a limit of 10mb per single request
 app.use(bodyParser.urlencoded({ extended: false, limit: "10mb" }));
 
-winston.log("info", `Cookie key is ${keys.cookieKey}`);
+winston.log("info", `Cookie key begins with ${keys.cookieKey.substr(0,5)}`);
 
 // Setup the cookie session with an age of 30 days
 app.use(
