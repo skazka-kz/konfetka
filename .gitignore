@@ -9,6 +9,10 @@
 # production
 /build
 
+server/uploads/*.jpg
+server/uploads/*.jpeg
+server/uploads/*.png
+server/uploads/*.gif
 # misc
 .DS_Store
 .env.local
