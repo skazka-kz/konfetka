@@ -29,20 +29,26 @@ class PopularProductsSection extends React.Component {
   }
 
   async componentDidMount() {
-    let response;
-    if (this.props.onlyPopular) {
-      response = await axios.get("/api/misc/popular_products");
-    } else {
-      response = await axios.get("/api/misc/all_products");
-    }
-    this.setState({
-      allProducts: response.data,
-      filteredProducts: response.data,
-      currentProducts: response.data.slice(0, this.props.perPage),
-      allPages: Math.ceil(response.data.length / this.props.perPage)
-    });
-    if (this.props.showCategories) {
-      await this.loadCategories();
+    try {
+      let response;
+      if (this.props.onlyPopular) {
+        response = await axios.get("/api/misc/popular_products");
+      } else {
+        response = await axios.get("/api/misc/all_products");
+      }
+      this.setState({
+        allProducts: response.data,
+        filteredProducts: response.data,
+        currentProducts: response.data.slice(0, this.props.perPage),
+        allPages: Math.ceil(response.data.length / this.props.perPage)
+      });
+      if (this.props.showCategories) {
+        await this.loadCategories();
+      }
+    } catch (e) {
+        this.setState({
+          error: "Error loading product data"
+        })
     }
   }
 
@@ -153,6 +159,9 @@ class PopularProductsSection extends React.Component {
   }
 
   render() {
+    if (this.state.error){
+      return <div>{this.state.error}</div>;
+    }
     const products = this.state.currentProducts.map(item => (
       <ProductItem key={item._id} {...item} />
     ));

@@ -3,7 +3,7 @@ import { Link, NavLink, Route, Switch } from "react-router-dom";
 import { view } from "react-easy-state";
 import styled from "styled-components";
 import "../../../node_modules/materialize-css/dist/css/materialize.min.css";
-import "../../../node_modules/materialize-css";
+//import "../../../node_modules/materialize-css";
 import "./AdminDashboard.css";
 import AuthPanel from "./authentication/AuthenticationPanel";
 import ProductSection from "./products/ProductsSection";

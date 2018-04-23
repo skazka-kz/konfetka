@@ -64,9 +64,7 @@ const ShopDistance = styled.p`
   font-weight: bold;
   color: #fe6321;
 `;
-const Notice = styled.p`
-
-`;
+const Notice = styled.p``;
 
 class ShopFinder extends Component {
   constructor(props) {
@@ -80,15 +78,20 @@ class ShopFinder extends Component {
       isSupported: this.locator.isSupported,
       accuracy: null
     };
-
-    console.log(this.locator);
   }
 
   async componentDidMount() {
-    const response = await axios.get("shops.json");
-    this.setState({
-      shops: response.data.shops
-    });
+    try {
+      const response = await axios.get("shops.json");
+      this.setState({
+        shops: response.data.shops
+      });
+    } catch (e) {
+      this.setState({
+        shops: [],
+        error: "Could not load shops"
+      });
+    }
   }
 
   async findUser() {
@@ -152,8 +155,9 @@ class ShopFinder extends Component {
     } else if (this.state.error) {
       return (
         <ErrorPanel>
-          Не удалось найти ваше местоположение. Попробуйте перезагрузить
-          страницу.
+          {this.state.error
+            ? this.state.error
+            : "Не удалось найти ваше местоположение. Попробуйте перезагрузить страницу."}
         </ErrorPanel>
       );
     } else {
@@ -164,8 +168,11 @@ class ShopFinder extends Component {
               Найти ближайшую "Конфетку"
             </Button>
             <Notice>
-              Расстояния приблезительны, точность зависит от GPS данных, полученых с вашего устройства.
-              {(this.state.accuracy) ? `Приблезительная погрешность - ${this.state.accuracy} метров` : null}
+              Расстояния приблезительны, точность зависит от GPS данных,
+              полученых с вашего устройства.
+              {this.state.accuracy
+                ? `Приблезительная погрешность - ${this.state.accuracy} метров`
+                : null}
             </Notice>
             {this.calculateDistances()}
           </SlimContentSection>
