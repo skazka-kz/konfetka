@@ -25,7 +25,6 @@ services:
       - /usr/src/app/server/uploads
     labels:
       traefik.backend: "konfetka-prod"
-      traefik.protocol: "http"
       traefik.docker.network: "web"
       traefik.frontend.rule: "Host:dev.konfetka-shop.kz"
       traefik.enable: "true"
