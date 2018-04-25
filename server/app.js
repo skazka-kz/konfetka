@@ -63,7 +63,7 @@ require("./routes/products")(app);
 // Setup static routes
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-if (["production", "ci"].includes(process.env.NODE_ENV) || process.env.CI) {
+if (["production", "ci", "test"].includes(process.env.NODE_ENV) || process.env.CI) {
   winston.log("info", "Starting in Production mode, adding the static paths");
   app.use(express.static("build"));
   app.get("*", (req, res) => {

@@ -6,7 +6,7 @@ const puppeteer = require("puppeteer");
 class CustomPage {
   static async build() {
     const browser = await puppeteer.launch({
-      headless: true,
+      headless: false,
       args: ['--no-sandbox']
     });
     const page = await browser.newPage();
@@ -36,6 +36,10 @@ class CustomPage {
 
   async getContentsOf(selector) {
     return this.page.$eval(selector, el => el.innerHTML);
+  }
+
+  async getDomElement(selector) {
+    return this.page.$eval(selector, el => el);
   }
 }
 

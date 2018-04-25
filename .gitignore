@@ -31,4 +31,3 @@ yarn-error.log*
 
 # files with sensitive keys for local dev and tests
 config/dev.js
-config/test.js
