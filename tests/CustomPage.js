@@ -5,10 +5,15 @@ const puppeteer = require("puppeteer");
  */
 class CustomPage {
   static async build() {
-    const browser = await puppeteer.launch({
+
+    const settings = process.env.CI ? {
+      headless: true,
+      args: ['--no-sandbox']
+    } : {
       headless: false,
       args: ['--no-sandbox']
-    });
+    };
+    const browser = await puppeteer.launch(settings);
     const page = await browser.newPage();
     const customPage = new CustomPage(page);
 
@@ -38,8 +43,17 @@ class CustomPage {
     return this.page.$eval(selector, el => el.innerHTML);
   }
 
-  async getDomElement(selector) {
-    return this.page.$eval(selector, el => el);
+  async getImageSrc(selector){
+    return this.page.$eval(selector, el => el.src);
+  }
+
+  async getDomElementProperty(selector, property){
+    console.log(property);
+    return this.page.$eval(selector, el => el[property]);
+  }
+
+  async getDomElement(selector){
+    return this.page.$(selector);
   }
 }
 

@@ -20,13 +20,17 @@ describe("Basic landing page interactions", () => {
     await page.goto(url);
   });
   afterEach(async () => {
-    // await page.close();
+    await page.close();
   });
 
   it("Can see the logo", async () => {
     const logoImage = await page.getDomElement("header img");
-    console.log(logoImage);
     expect(logoImage).toBeTruthy();
+  });
+
+  it("Clicking the banner pea changes the banner image", async () => {
+    const bannerImage = await page.getImageSrc(".slider .slide img");
+    console.log(bannerImage);
   });
 });
 
