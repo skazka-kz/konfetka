@@ -14,7 +14,6 @@ beforeAll(() => {
 
 describe("Basic landing page interactions", () => {
   let page;
-
   beforeEach(async () => {
     page = await CustomPage.build();
     await page.goto(url);
