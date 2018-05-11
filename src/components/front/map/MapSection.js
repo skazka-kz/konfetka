@@ -40,9 +40,6 @@ const FinderLink = styled(Link)`
 `;
 
 class MapSection extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   showShopFinder() {
     if (window.innerWidth < 2000) {

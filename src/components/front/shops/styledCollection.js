@@ -4,9 +4,9 @@ import styled, { keyframes } from "styled-components";
 import candyPattern from "../../../resources/candy_pattern.png";
 
 const orange = "#fc5f21";
-const brown = "#70401C";
+/*const brown = "#70401C";
 const lightGrey = "#A2A2A2";
-const darkGrey = "#686868";
+const darkGrey = "#686868";*/
 
 export const CandyOverlay = styled.div`
   position: absolute;
